@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import TclError, ttk
+from tkinter import ttk
 
 
 def create_nav_frame(container):
