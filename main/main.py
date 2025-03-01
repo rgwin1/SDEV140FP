@@ -3,25 +3,23 @@ sys.path.append('C:/Users/rgwin/OneDrive/Desktop/School/Spring2025/SDEV140FP/Fam
 import tkinter as tk
 from tkinter import ttk
 from navigation.navbar import NavBar
-
+from utils.utils import center_window, center_main
+from login.login import LoginModal
 
 def create_nav_frame(container):
     
-    #define frame
-    frame = tk.Frame(container, bg='blue', height=300)
-    #commenting out these for testing
-    # frame.columnconfigure(0, weight=1)
-    # frame.rowconfigure(0, weight=1)
-    return frame
+    #define navbar frame
+    nav_frame = tk.Frame(container, bg='blue', height=300)
+    return nav_frame
 
 def create_window_frame(container):
-    frame = tk.Frame(container, bg='orange')
+    window_frame = tk.Frame(container, bg='orange')
 
-    frame.grid(column=0, row=1, sticky='nsew')
+    window_frame.grid(column=0, row=1, sticky='nsew')
     # frame.columnconfigure(0, weight=1)
     #frame.rowconfigure(1, weight=1)
 
-    return frame
+    return window_frame
 
 
 # def create_dashboard_window():
@@ -34,27 +32,15 @@ def create_window_frame(container):
 def create_main_window():
     root = tk.Tk()
     root.title('Family Tracker')
+    root.withdraw()
 
     
     #configure main_window rows and columns (this was messed up and prevented me from seeing the window_frame)
     root.columnconfigure(0, weight=1) #stretches across columns, all available space? I think
-
     root.rowconfigure(1, weight=1) #starts at row 1 and stretches to fill the remaining space, i think, within root
 
     #set window size
-    window_width = 1500
-    window_height = 1000
-
-    #get the screen dimension
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-
-    #find the center point
-    center_x = int(screen_width/2 - window_width/2)
-    center_y = int(screen_height/2 - window_height/2)
-
-    #set the position of the window to the center of the screen
-    root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+    center_main(root)
 
     #instantiate window frame
     window_frame = create_window_frame(root)
@@ -75,11 +61,10 @@ def create_main_window():
     #nav_frame.pack(anchor="center", pady=10)
     nav = NavBar(nav_frame, window_frame) #nav_frame gets passed as the parent container to the navbar frame.   See below
 
-
-
-    #instantiate window frame functionality(?)
-
-
+    #add login modal
+    login_modal = LoginModal(root)
+    root.wait_window(login_modal.login_window)
+    root.deiconify()
 
     root.mainloop()
 
