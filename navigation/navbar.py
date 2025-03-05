@@ -13,7 +13,7 @@ class NavBar():
     # Initialize the navbar, set up the frame, and store any necessary references
         # self.frame = tk.Frame(container, bg='red', height=25)
         self.navbar_frame = tk.Frame(container, bg='blue')
-        self.window_frame = window_frame
+        self.window_frame = window_frame #this is the main window frame that has the navbar placed inside of it
  
         # Create the navigation buttons and add them to the navbar
         #dashboard button
@@ -32,7 +32,7 @@ class NavBar():
         self.planner_button = tk.Button(self.navbar_frame, text="Planner", command=self.go_to_planner, width=20, height=2)
         self.planner_button.grid(row=0, column=3, sticky='ew', padx=5, pady=5)
 
-        #revisit these now that I have a better understanding how the row/col configuring works
+        #configure navbar_frame for rows? but not columns? 
         self.navbar_frame.rowconfigure(0, weight=1)
         self.navbar_frame.grid(row=0, column=0, padx=5, pady=5)
         
@@ -43,7 +43,7 @@ class NavBar():
         #clear the current window
         for widget in self.window_frame.winfo_children():
             widget.destroy()
-        #instantiate a dashframe object
+        #instantiate a dashframe object, constructor creates everything at moment of instantiation
         self.dashboard = DashBoard(self.window_frame)
 
    #family
@@ -64,6 +64,4 @@ class NavBar():
             widget.destroy()
         self.contact = Planner(self.window_frame)
 
-    # Apply any styling, customization options, or layout settings
     
-    # (Optional) If needed, set up methods to modify the navbar dynamically (e.g., show/hide, update styles)

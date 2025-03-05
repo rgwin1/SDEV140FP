@@ -33,15 +33,14 @@ def center_main(window_frame):
     Args:
         window_frame (_type_): _description_
     """
-
+    
     window_frame.update_idletasks()
     window_width = int(window_frame.winfo_screenwidth() * 0.40)
     window_height = int(window_frame.winfo_screenheight() * 0.75)
     screen_width = window_frame.winfo_screenwidth()
     screen_height = window_frame.winfo_screenheight()
-
+    #find center points
     center_x = int((screen_width - window_width)/2)
     center_y = int((screen_height - window_height)/2)
-
     window_frame.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
     

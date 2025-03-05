@@ -59,7 +59,7 @@ class LoginModal():
 
         #center login relative to parent (dashboard in this case)
         center_window(325, 100, self.login_window)
-    #do this later
+    #do this laterm, see comment B:
     def create_account(self):
         return None
     
@@ -75,7 +75,10 @@ class LoginModal():
             messagebox.showerror("User not found.")
         else:
             messagebox.showerror("Incorrect username or password")
-        
+    #when user tries to close login window befor successful login, does nothing    
     def prevent_close(self):
         pass
- #A:  may try to make frame within frame and center frame to stretch as login window stretches, determine later
+
+
+#A:  may try to make frame within frame and center frame to stretch as login window stretches, determine later
+#B:  add ability to store users and password information to a database, probably mongo for now
