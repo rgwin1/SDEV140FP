@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 
+
 #create Family member model class
 class FamilyMember:
     #class level variables
@@ -15,11 +16,12 @@ class FamilyMember:
         self._photo = None
         #call setters
         self.first_name = first_name
+        #ensure middle_name is initialized
+        self._middle_name = middle_name
         self.last_name = last_name
         self.dob = dob
         self.photo = photo
-        #ensure middle_name is initialized
-        self._middle_name = middle_name
+
         #ensure additional_info is initialized, and defaults to empty dictionary
         self.additional_info = additional_info if additional_info else {}
 
@@ -32,6 +34,14 @@ class FamilyMember:
         if not value:
             raise ValueError("First name cannot be empty")
         self._first_name = value.strip().title() 
+    
+    @property
+    def middle_name(self):
+        return self._middle_name
+    
+    @property
+    def dob(self):
+        return self._dob
 
     @property
     def last_name(self):
@@ -43,20 +53,12 @@ class FamilyMember:
             raise ValueError("Last name cannot be empty")
         self._last_name = value.strip().title()
     
-    @property
-    def middle_name(self):
-        return self._middle_name
-    
-    @property
-    def dob(self):
-        return self._dob
-    
     @dob.setter
     def dob(self, value):
         try:
-            self._dob = datetime.strptime(value,"%Y-%m-%d").date() #convert string to date
+            self._dob = datetime.strptime(value,"%m/%d/%Y") #convert string to date
         except ValueError:
-            raise ValueError("DOB must be in YYYY-MM-DD format.")
+            raise ValueError("DOB must be in DD/MM? format.")
         
     @property
     def photo(self):
