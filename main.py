@@ -6,24 +6,17 @@ creates the main window, navigation bar, and page frames.
 handles user login before displaying the main interface.
 """
 
-import sys
-import os
-
-#dynamically add the project root to sys.path to allow module imports from any directory.
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
 import tkinter as tk
-from tkinter import ttk
-from navigation.navbar import NavBar
 from utils.utils import center_main
 from login.login import LoginModal
+from navigation.navbar import NavBar
 
 #define navbar frame
 def create_nav_frame(container):
     """
     creates a navigation frame inside the main window.
     """
-    nav_frame = tk.Frame(container, bg='blue', height=300)
+    nav_frame = tk.Frame(container, bg='#008000', height=300)
     return nav_frame
 
 #define main content frame where different pages will be displayed
@@ -31,7 +24,7 @@ def create_window_frame(container):
     """
     creates the primary content frame for displaying different pages (dashboard, family, planner, etc.).
     """
-    window_frame = tk.Frame(container, bg='orange')
+    window_frame = tk.Frame(container, bg='#FFA500')
     window_frame.grid(column=0, row=1, sticky='nsew')
     return window_frame
 
@@ -43,7 +36,7 @@ def create_main_window():
     DEBUG_MODE = False  #set to True to disable login for debugging purposes
 
     root = tk.Tk()
-    root.title('Family Tracker')
+    root.title('Family Organizer')
 
     #if not in debug mode, show login modal before displaying main application
     if not DEBUG_MODE:
@@ -58,6 +51,7 @@ def create_main_window():
 
     #set window size and center on screen
     center_main(root)
+    
 
     #instantiate content frame (holds different pages)
     main_window_frame = create_window_frame(root)
@@ -73,6 +67,7 @@ def create_main_window():
 
     #create and attach navigation bar
     nav = NavBar(nav_frame, main_window_frame, root)
+    nav.go_to_dashboard()
 
     #start the application loop
     root.mainloop()

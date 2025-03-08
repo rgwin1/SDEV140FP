@@ -1,3 +1,10 @@
+"""
+utils.py
+
+stores usable functions used anywhere when needed
+
+"""
+
 def center_window(window_width, window_height, window_frame):
     """
     Adjusts a Tkinter window's position so it is centered on the screen.

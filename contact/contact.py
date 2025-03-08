@@ -18,11 +18,13 @@ class Contact():
 
         :param window_frame: parent frame where contact UI elements will be placed.
         """
-
-        self.contact_frame = tk.Frame(window_frame, bg='blue', borderwidth=2, relief='solid')
-
         
-        self.contact_frame.grid(column=0, row=0, sticky='nsew')
+        self.contact_frame = tk.Frame(window_frame, bg='#0000FF', borderwidth=2, relief='solid')
+        self.contact_frame.pack(anchor="center", fill="both", expand=True)
 
-        self.label = tk.Label(self.contact_frame, text="Contact Feature Coming Soon!", font=("Arial", 20, "bold"))
-        self.label.pack(anchor="center", pady=5)
+        #future feature placeholder frame
+        self.future_feature_frame = tk.Frame(self.contact_frame, bg="#ADD8E6")
+        self.future_feature_frame.pack(anchor="center", fill="both", expand=True)
+
+        self.label = tk.Label(self.future_feature_frame, bg="#ADD8E6", text="Contact Feature Coming Soon!", font=("Arial", 20, "bold"))
+        self.label.pack(anchor="center", fill="both", expand=True)

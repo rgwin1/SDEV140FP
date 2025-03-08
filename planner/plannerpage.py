@@ -6,7 +6,6 @@ currently contains placeholder UI elements for future implementation.
 """
 
 import tkinter as tk
-from tkinter import ttk
 
 class Planner():
     """
@@ -19,13 +18,16 @@ class Planner():
 
         :param window_frame: parent frame where the planner UI elements will be placed.
         """
-        self.frame = tk.Frame(window_frame, bg='blue', borderwidth=2, relief='solid')
-        self.frame.grid(column=0, row=0, sticky='nsew')
+        # window_frame.columnconfigure(0, weight=1)
+        # window_frame.rowconfigure(0, weight=1)
+        # window_frame.update_idletasks()
+        self.planner_frame = tk.Frame(window_frame, bg='blue', borderwidth=2, relief='solid')
+        self.planner_frame.pack(anchor="center", fill="both", expand=True)
+     
 
         #future feature placeholder frame
-        self.future_feature_frame = tk.Frame(self.frame, bg="lightblue", padx=10, pady=10, height=300, width=300)
-        self.future_feature_frame.pack(fill="both", expand=True, padx=5, pady=5)
-
+        self.future_feature_frame = tk.Frame(self.planner_frame, bg="lightblue", padx=10, pady=10)
+        self.future_feature_frame.pack(anchor="center", fill="both", expand=True)
         #placeholder label
-        self.label = tk.Label(self.future_feature_frame, text="Planner Feature Coming Soon", font=("Arial", 20, "bold"))
-        self.label.pack(anchor="center", pady=5)
+        self.label = tk.Label(self.future_feature_frame, bg="lightblue", text="Planner Feature Coming Soon!", font=("Arial", 20, "bold"))
+        self.label.pack(anchor="center", fill="both", expand=True)

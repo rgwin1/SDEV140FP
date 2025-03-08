@@ -9,7 +9,14 @@ import tkinter as tk
 from family.familymember import FamilyMemberUI
 from database.db import family_collection
 from utils.utils import calculate_x_position, calculate_y_position
+from utils.tooltip import ToolTip
 from family.addfamilymembermodal import AddFamilyMember
+import os
+
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+default_image = os.path.join(base_dir, "..", "assets", "defaultprofile.png")
+
 
 class Family():
     """
@@ -35,7 +42,11 @@ class Family():
         self.add_family_member_button.pack(side='bottom', padx=5, pady=5)
 
         #populate existing family members
-        self.populate_family_members()
+
+        if not family_collection.find_one():
+            self.show_default_object()
+        else:
+            self.populate_family_members()
     
     #opens the add family member modal
     def add_family_member(self):
@@ -62,13 +73,46 @@ class Family():
             y = calculate_y_position(index) #calculate y coordinate dynamically
             
             #create a FamilyMemberUI object
-            family_member_object = FamilyMemberUI(self.family_tree_canvas, family_member_dict)
+            self.family_member_object = FamilyMemberUI(self.family_tree_canvas, family_member_dict)
 
             #retrieve the frame containing family member details
-            family_member_frame = family_member_object.get_family_member_frame()
+            self.family_member_frame = self.family_member_object.get_family_member_frame()
 
             #add family member UI to canvas at calculated position
-            self.family_tree_canvas.create_window(x, y, window=family_member_frame)
+            self.family_tree_canvas.create_window(x, y, window=self.family_member_frame)
 
             #force UI update to reflect changes
             self.family_tree_canvas.update_idletasks()
+
+
+        
+    def show_default_object(self):
+        #main container frame
+        self.family_member_frame = tk.Frame(self.family_tree_canvas, width=200, height=300, bg='gray', borderwidth=3, relief="raised")
+        self.family_tree_canvas.create_window(200, 200, window=self.family_member_frame)
+
+        #subframe for photo and name labels
+        self.photo_name_frame = tk.Frame(self.family_member_frame, borderwidth=3, relief="sunken")
+        #pack photo and name frame
+        self.photo_name_frame.pack(expand=True, fill=None, padx=10, pady=10)
+
+        #default profile photo
+        self.default_profile_photo = tk.PhotoImage(file=default_image)
+
+        #label for profile photo
+        self.default_profile_photo_label = tk.Label(self.photo_name_frame, image=self.default_profile_photo, borderwidth=2, relief="solid")
+        self.default_profile_photo_label.pack(expand=True, fill=None, padx=5, pady=5, side="bottom")
+
+        #blank placeholder name label
+        self.blank_name_label = tk.Label(self.photo_name_frame, text="Family Member Name") #placeholder name label
+        self.blank_name_label.pack(padx=5, pady=5, side="top")
+
+        #show more details button
+        self.show_more_button = tk.Button(self.family_member_frame, text="[+]", command=self.show_more, width=3, height=1)
+        self.show_more_button.pack(side='bottom', padx=5, pady=5)
+
+        ToolTip(self.default_profile_photo_label, "Default Profile Photo")
+
+    #placeholder for future detail expansion functionality
+    def show_more(self):
+        return None

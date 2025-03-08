@@ -6,7 +6,8 @@ includes logic to handle default profiles and loading/storing images from MongoD
 """
 
 import tkinter as tk
-from tkinter import ttk, PhotoImage
+from tkinter import PhotoImage
+from utils.tooltip import ToolTip
 from PIL import Image, ImageTk
 import os
 import base64
@@ -14,6 +15,8 @@ import io
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 default_image = os.path.join(base_dir, "..", "assets", "defaultprofile.png")
+
+
 
 class FamilyMemberUI():
      """
@@ -30,43 +33,13 @@ class FamilyMemberUI():
           self.family_member_frame_container = parent_family_tree_window_frame
           #holds data dictionary for family member (from database)
           self.family_member_data = family_member_info
-
+          
           #generate UI components based on family member data
-          if not self.family_member_data:
-               self.show_default_object()
-          else:   
+          if type(self.family_member_data) != None:
                self.create_family_member(self.family_member_data)
-
-     #default UI displayed if no family member data is present in db
-     def show_default_object(self):
-          #main container frame
-          self.family_member_frame = tk.Frame(self.family_member_frame_container, width=200, height=300, bg='gray', borderwidth=3, relief="raised")
-
-          #subframe for photo and name labels
-          self.photo_name_frame = tk.Frame(self.family_member_frame, borderwidth=3, relief="sunken")
-
-          #default profile photo
-          self.default_profile_photo = tk.PhotoImage(file=default_image)
-
-          #label for profile photo
-          self.default_profile_photo_label = tk.Label(self.photo_name_frame, image=self.default_profile_photo, borderwidth=2, relief="solid")
-          self.default_profile_photo_label.pack(expand=True, fill=None, padx=5, pady=5, side="bottom")
-
-          #blank placeholder name label
-          self.blank_name_label = tk.Label(self.photo_name_frame, text="Family Member Name") #placeholder name label
-          self.blank_name_label.pack(padx=5, pady=5, side="top")
-
-          #pack photo and name frame
-          self.photo_name_frame.pack(expand=True, fill=None, padx=10, pady=10)
-
-          #show more details button
-          self.show_more_button = tk.Button(self.family_member_frame, text="[+]", command=self.show_more, width=3, height=1)
-          self.show_more_button.pack(side='bottom', padx=5, pady=5)
-
+ 
      #populate family member details from database data
      def create_family_member(self, family_member_data):
-          if not family_member_data:
-               return 
 
           #extract family member details
           self.family_data = family_member_data
@@ -87,7 +60,7 @@ class FamilyMemberUI():
           self.full_name = self.first_name + " " + self.middle_name + " " + self.last_name
 
           #family member main container
-          self.family_member_frame = tk.Frame(self.family_member_frame_container, width=200, height=300, bg='gray', borderwidth=3, relief="raised")
+          self.family_member_frame = tk.Frame(self.family_member_frame_container, width=200, height=300, bg='#808080', borderwidth=3, relief="raised")
 
           #frame for photo and name
           self.photo_name_frame = tk.Frame(self.family_member_frame, borderwidth=3, relief="sunken")
@@ -105,18 +78,23 @@ class FamilyMemberUI():
           self.photo_image_resized = self.pil_photo_image.resize((165, 200), Image.LANCZOS)
           self.photo_image = ImageTk.PhotoImage(self.photo_image_resized)
           self.photo_image_label.config(image=self.photo_image)
+          #apply tooltip (alternate text)
+          ToolTip(self.photo_image_label, "Profile Photo")
 
           #show more details button
           self.show_more_button = tk.Button(self.family_member_frame, text="[+]", command=self.show_more, width=3, height=1)
           self.show_more_button.pack(padx=5, pady=5, side="bottom")
      
-     #ge tfamily_member_frame
      def get_family_member_frame(self):
           """
-          returns the frame containing the family member UI.
+          retrieves the main frame containing the family member's UI components.
+          this frame is used when adding the family member to the family tree canvas.
+          
+          :return: the tkinter Frame object representing the family member.
           """
           return self.family_member_frame
-
-     #placeholder for future detail expansion functionality
+     
+     #feature to come, will show more information about each family member when called
      def show_more(self):
-          return None
+          return
+     

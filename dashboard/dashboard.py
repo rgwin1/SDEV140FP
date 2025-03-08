@@ -16,7 +16,7 @@ class DashBoard:
         self.parent.columnconfigure(2, weight=1) #notes (right column)
 
         #to-do list widget setup
-        self.to_do_frame = tk.Frame(self.parent, bg='lightgray', padx=10, pady=10)
+        self.to_do_frame = tk.Frame(self.parent, bg='#A52A2A', padx=10, pady=10)
         self.to_do_frame.grid(row=0, column=0, sticky='nsew')
 
         self.to_do_label = tk.Label(self.to_do_frame, text='To-Do List', font=('Arial', 14, 'bold')) #to-do list title label
@@ -26,7 +26,7 @@ class DashBoard:
         self.add_task_button.pack(anchor='center', pady=5)
 
         #calendar (middle column)
-        self.calendar_frame = tk.Frame(self.parent, padx=10, pady=10)
+        self.calendar_frame = tk.Frame(self.parent, bg='#FFA500', padx=10, pady=10)
         self.calendar_frame.grid(row=0, column=1, sticky='nsew')
 
         self.calendar_label = tk.Label(self.calendar_frame, text="Today's Schedule", font=('Arial', 16, 'bold')) #calendar header label
@@ -40,7 +40,7 @@ class DashBoard:
         self.add_event_button.pack(anchor='center', pady=5)
 
         #notes (right column)
-        self.notes_frame = tk.Frame(self.parent, bg='lightgray', padx=10, pady=10)
+        self.notes_frame = tk.Frame(self.parent, bg='#A52A2A', padx=10, pady=10)
         self.notes_frame.grid(row=0, column=2, sticky='nsew')
 
         self.notes_label = tk.Label(self.notes_frame, text='Notes', font=('Arial', 14, 'bold')) #notes section label

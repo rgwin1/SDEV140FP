@@ -27,7 +27,7 @@ class NavBar():
         :param parent_main_window_frame: main window frame where content will be loaded.
         """
         #navbar frame holds the navigation buttons
-        self.navbar_frame = tk.Frame(nav_frame, bg='blue')
+        self.navbar_frame = tk.Frame(nav_frame, bg='#008000')
 
         #store reference to the main window frame
         self.main_window_frame = parent_main_window_frame

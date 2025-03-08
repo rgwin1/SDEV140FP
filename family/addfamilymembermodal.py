@@ -6,6 +6,7 @@ handles photo uploads and submits new family member data to MongoDB.
 """
 
 import tkinter as tk
+import os
 from tkinter import filedialog, messagebox
 from database.db import family_collection
 from utils.utils import center_window
@@ -119,9 +120,23 @@ class AddFamilyMember():
         #instantiate FamilyMember object
         new_family_member = FamilyMember(first_name, last_name, dob, middle_name, self.photo_file_path)
 
+        # Ensure the selected file exists
+        if not self.photo_file_path or not os.path.exists(self.photo_file_path):
+            messagebox.showerror("Error", "Selected photo file does not exist.")
+            return
+
+        # Ensure the file is a valid image type
+        if not self.photo_file_path.lower().endswith((".png", ".jpg", ".jpeg")):
+            messagebox.showerror("Error", "Invalid file type. Please select a PNG or JPG image.")
+            return
+
         #encode selected photo to base64 for storage
-        with open(self.photo_file_path, 'rb') as image_file:
-            photo_base64 = base64.b64encode(image_file.read()).decode('utf-8')
+        try:
+            with open(self.photo_file_path, 'rb') as image_file:
+                self.photo_conversion = base64.b64encode(image_file.read()).decode("utf-8")
+        except Exception as e:
+            messagebox.showerror("Error", "Invalid image file selected.")
+            return
 
         #prepare data for database insertion
         self.family_member_data = {
@@ -129,7 +144,7 @@ class AddFamilyMember():
             'middle_name': new_family_member.middle_name,
             'last_name': new_family_member.last_name,
             'dob': new_family_member.dob,
-            'photo': photo_base64
+            'photo': self.photo_conversion
         }
 
         #insert data into MongoDB
