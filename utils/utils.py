@@ -43,4 +43,18 @@ def center_main(window_frame):
     center_x = int((screen_width - window_width)/2)
     center_y = int((screen_height - window_height)/2)
     window_frame.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+
+
+def calculate_x_position(index):
+    """Calculates the x-coordinates based on index, resetting every 4 members"""
+    base_x = 200 #starting position
+    spacing_x = 250 #space between each family member
+
+    return base_x + ((index % 4) * spacing_x) #resets every 4 family members
+def calculate_y_position(index):
+    """calculates the y-coordinate based on index, moving down every 4 members"""
+    base_y = 200 #starting y position
+    spacing_y = 350 #space between rows
+
+    return base_y + ((index//4) * spacing_y) #moves down every 4 members, using floor division when index is a multiple of 4
     
